@@ -2,15 +2,39 @@ $(document).ready(function () {
   function formatDateString(day, month, year) {
     month = parseInt(month) + 1; // We add one because the value of xml starts of 0. For example January is in zero position.
     const d = new Date(`${year}-${month}-${day}`);
-    console.log(d);
     const years = d.getFullYear();
     const date = d.getDate();
     const months = d.getMonth() + 1;
-    console.log(months);
     const formattedDate = `${date}/${months}/${years}`;
     return formattedDate;
   }
-  // Handler for .ready() called.
+
+  function dateToTimestamp(date) {
+    date = date.split("/");
+    let newDate = new Date(date[2], date[1] - 1, date[0]);
+    newDate = newDate.getTime();
+    return newDate;
+  }
+
+  function findDifferenceOfDays(end, start) {
+    const endTimestamp = dateToTimestamp(end);
+    const startTimestamp = dateToTimestamp(start);
+    let difDaysTS = endTimestamp - startTimestamp;
+    let diffDays = difDaysTS / (1000 * 3600 * 24);
+    diffDays = parseInt(diffDays);
+    diffDays = Math.abs(diffDays);
+    return diffDays;
+  }
+
+  function todayDate() {
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+    today = dd + "/" + mm + "/" + yyyy;
+    return today;
+  }
+
   $("#xmlupload").change(function () {
     var file = document.getElementById("xmlupload").files[0];
     //You could insert a check here to ensure proper file type
@@ -18,8 +42,7 @@ $(document).ready(function () {
     reader.readAsText(file);
     reader.onloadend = function () {
       var xmlData = $(reader.result);
-      console.log(xmlData);
-      //   console.log(xmlData);
+      // console.log(xmlData);
       xmlData = xmlData[1];
       //   console.log(xmlData);
       const ypiresies = xmlData.getElementsByTagName("ipiresia");
@@ -27,6 +50,7 @@ $(document).ready(function () {
       const adeies = xmlData.getElementsByTagName("adeia");
       const poreia = xmlData.getElementsByTagName("poreia");
       let simioseis = xmlData.getElementsByTagName("simioseis");
+
       let personDetails = Array.from(details);
       personDetails = personDetails[0];
       const arrayServices = Array.from(ypiresies);
@@ -34,20 +58,28 @@ $(document).ready(function () {
       const poreies = Array.from(poreia);
       simioseis = simioseis[0].childNodes;
       const asm = simioseis[5].innerText;
-      const personName = personDetails.childNodes[0];
-      const startYear = personDetails.childNodes[1];
-      const startMonth = personDetails.childNodes[2];
-      const startDay = personDetails.childNodes[3];
-      const endYear = personDetails.childNodes[4];
-      const endMonth = personDetails.childNodes[5];
-      const endDay = personDetails.childNodes[6];
-      const soma = personDetails.childNodes[7];
+
+      const personName = personDetails.childNodes[0].innerText;
+      const startYear = personDetails.childNodes[1].innerText;
+      const startMonth = personDetails.childNodes[2].innerText;
+      const startDay = personDetails.childNodes[3].innerText;
+      const endYear = personDetails.childNodes[4].innerText;
+      const endMonth = personDetails.childNodes[5].innerText;
+      const endDay = personDetails.childNodes[6].innerText;
+      const soma = personDetails.childNodes[7].innerText;
       // ARMY = 0; NAVY = 1; HAF = 2;
       const oplo_stratou = personDetails.childNodes[8]; // It returns value only on ξηρά..
       const seira = personDetails.childNodes[9];
       const esso = personDetails.childNodes[10];
       const prison = personDetails.childNodes[11];
       const notLetMeOut = personDetails.childNodes[12];
+
+      const startDate = formatDateString(startDay, startMonth, startYear);
+      const endDate = formatDateString(endDay, endMonth, endYear);
+      const todayDateString = todayDate();
+      const apolele = findDifferenceOfDays(endDate,todayDateString); // How many days for leaving army and be again citizen
+      const daysInArmy = findDifferenceOfDays(todayDateString,startDate); // How many days in army
+
       arrayServices.forEach((element) => {
         let yp_name = element.childNodes[0].innerText;
         let yp_year = element.childNodes[1].innerText;
