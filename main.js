@@ -99,7 +99,6 @@ $(document).ready(function () {
       const apolele = findDifferenceOfDays(endDate, todayDateString); // How many days for leaving army and be again citizen
       const daysInArmy = findDifferenceOfDays(todayDateString, startDate); // How many days in army
 
-
       let yp_names = [];
       let adeies_names = [];
 
@@ -119,13 +118,16 @@ $(document).ready(function () {
         let adeiaDay = element.childNodes[3].innerText;
         adeies_names.push(adeiaName);
       });
-      
+
       poreies.forEach((element) => {
         let poreiaName = element.childNodes[0].innerText;
         let poreiaYear = element.childNodes[1].innerText;
         let poreiaMonth = element.childNodes[2].innerText;
         let adeiaDay = element.childNodes[3].innerText;
       });
+
+      const mfYpiresia = maxElement(yp_names);
+      const mfAdeia = maxElement(adeies_names);
     };
   });
 });
