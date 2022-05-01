@@ -9,6 +9,24 @@ $(document).ready(function () {
     return formattedDate;
   }
 
+  function maxElement(array) {
+    //https://stackoverflow.com/questions/1053843/get-the-element-with-the-highest-occurrence-in-an-array
+    if (array.length == 0) return null;
+    var modeMap = {};
+    var maxEl = array[0],
+      maxCount = 1;
+    for (var i = 0; i < array.length; i++) {
+      var el = array[i];
+      if (modeMap[el] == null) modeMap[el] = 1;
+      else modeMap[el]++;
+      if (modeMap[el] > maxCount) {
+        maxEl = el;
+        maxCount = modeMap[el];
+      }
+    }
+    return maxEl;
+  }
+
   function dateToTimestamp(date) {
     date = date.split("/");
     let newDate = new Date(date[2], date[1] - 1, date[0]);
@@ -77,8 +95,13 @@ $(document).ready(function () {
       const startDate = formatDateString(startDay, startMonth, startYear);
       const endDate = formatDateString(endDay, endMonth, endYear);
       const todayDateString = todayDate();
-      const apolele = findDifferenceOfDays(endDate,todayDateString); // How many days for leaving army and be again citizen
-      const daysInArmy = findDifferenceOfDays(todayDateString,startDate); // How many days in army
+
+      const apolele = findDifferenceOfDays(endDate, todayDateString); // How many days for leaving army and be again citizen
+      const daysInArmy = findDifferenceOfDays(todayDateString, startDate); // How many days in army
+
+
+      let yp_names = [];
+      let adeies_names = [];
 
       arrayServices.forEach((element) => {
         let yp_name = element.childNodes[0].innerText;
@@ -86,13 +109,17 @@ $(document).ready(function () {
         let yp_month = element.childNodes[2].innerText;
         let yp_day = element.childNodes[3].innerText;
         let number = element.childNodes[4].innerText;
+        yp_names.push(yp_name);
       });
+
       arrayAdeies.forEach((element) => {
         let adeiaName = element.childNodes[0].innerText;
         let adeiaYear = element.childNodes[1].innerText;
         let adeiaMonth = element.childNodes[2].innerText;
         let adeiaDay = element.childNodes[3].innerText;
+        adeies_names.push(adeiaName);
       });
+      
       poreies.forEach((element) => {
         let poreiaName = element.childNodes[0].innerText;
         let poreiaYear = element.childNodes[1].innerText;
