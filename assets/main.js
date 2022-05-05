@@ -83,6 +83,24 @@ $(document).ready(function () {
     return today;
   }
 
+  function fixMonth(month) {
+    let returnValue;
+    returnValue = parseInt(month);
+    returnValue++;
+    return returnValue;
+  }
+
+  function toDatatables(input){
+    $(input).DataTable({
+      pagingType: "numbers",
+      pageLength: 5,
+      paging: true,
+      language: {
+        url: "https://cdn.datatables.net/plug-ins/1.11.2/i18n/el.json",
+      },
+    });
+  }
+
   $("#xmlupload").change(function () {
     var file = document.getElementById("xmlupload").files[0];
     if (file.type != "text/xml") {
@@ -144,17 +162,17 @@ $(document).ready(function () {
         case "0":
           soma = "Στρατός Ξηράς";
           logo = army_logo;
-          somaColor = '#fde81a';
+          somaColor = "#fde81a";
           break;
         case "1":
           soma = "Πολεμικό Ναυτικό";
           logo = navy_logo;
-          somaColor = '#1b4279';
+          somaColor = "#1b4279";
           break;
         case "2":
           soma = "Πολεμική Αεροπορία";
           logo = haf_logo;
-          somaColor = '#008bd0';
+          somaColor = "#008bd0";
           break;
         default:
           break;
@@ -179,28 +197,55 @@ $(document).ready(function () {
 
       const htmlPercentage = `<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100" style="width:${p}%"></div>`;
       $("#pr").append(htmlPercentage);
-      document.getElementById('the-percentage').innerText = ` ${p}%`;
-      document.querySelector('.progress-bar').style.backgroundColor = somaColor;
+      document.getElementById("the-percentage").innerText = ` ${p}%`;
+      document.querySelector(".progress-bar").style.backgroundColor = somaColor;
 
       let yp_names = [];
       let adeies_names = [];
 
+      let j = 1;
       arrayServices.forEach((element) => {
         let yp_name = element.childNodes[0].innerText;
         let yp_year = element.childNodes[1].innerText;
         let yp_month = element.childNodes[2].innerText;
         let yp_day = element.childNodes[3].innerText;
         let number = element.childNodes[4].innerText;
+        yp_month = fixMonth(yp_month);
+        let ypString = `${yp_day}/${yp_month}/${yp_year}`;
+        let html_yp = `
+      <tr>
+        <th scope="row">${j}</th>
+        <td>${yp_name}</td>
+        <td>${ypString}</td>
+        <td>${number}</td>
+      </tr>`;
+        $(".tbody-yp").append(html_yp);
+        j++;
         yp_names.push(yp_name);
       });
 
+      toDatatables('#tservices');
+
+      let i = 1;
       arrayAdeies.forEach((element) => {
         let adeiaName = element.childNodes[0].innerText;
         let adeiaYear = element.childNodes[1].innerText;
         let adeiaMonth = element.childNodes[2].innerText;
         let adeiaDay = element.childNodes[3].innerText;
+        adeiaMonth = fixMonth(adeiaMonth);
+        let adeiaString = `${adeiaDay}/${adeiaMonth}/${adeiaYear}`;
+        let html_adeies = `
+      <tr>
+        <th scope="row">${i}</th>
+        <td>${adeiaName}</td>
+        <td>${adeiaString}</td>
+      </tr>`;
+        $(".tbody-adeies").append(html_adeies);
+        i++;
         adeies_names.push(adeiaName);
       });
+
+      toDatatables('#tadeies');
 
       poreies.forEach((element) => {
         let poreiaName = element.childNodes[0].innerText;
@@ -225,6 +270,8 @@ $(document).ready(function () {
       document.getElementById("adeies").setAttribute("num", countAdeies);
       document.getElementById("sex").setAttribute("num", notLetMeOut);
       document.getElementById("jail").setAttribute("num", prison);
+      document.getElementById("adeia-text").innerText = mfAdeia;
+      document.getElementById("service-text").innerText = mfYpiresia;
 
       const counters = document.querySelectorAll(".box-number");
       const speed = 800;

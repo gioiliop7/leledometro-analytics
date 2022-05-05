@@ -195,3 +195,19 @@ header img {
     font-size:5rem;
     color:#000;
 }
+
+.whitebox{
+  background: #fff;
+  padding:1rem;
+  display:flex;
+  flex-direction: column;
+}
+
+.boxinner{
+  align-items: center;
+  justify-content: center;
+}
+
+.whitebox img{
+  max-width: 40px;
+}

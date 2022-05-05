@@ -21,6 +21,15 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"
+    ></script>
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
@@ -55,12 +64,16 @@
                 <h4 class="text-center" id="person-name"></h4>
                 <p class="text-center grey-color" id="esso-seira"></p>
                 <h6 class="text-center grey-color fw-bold" id="asm"></h6>
-                <hr>
+                <hr />
               </div>
             </div>
             <div class="col-md-7 col-dash col-border col-middle">
               <div class="container">
-                <h4>Ποσοστό ολοκληρωμένης θητείας:<span id="the-percentage"></span></h4>
+                <h4>
+                  Ποσοστό ολοκληρωμένης θητείας:<span
+                    id="the-percentage"
+                  ></span>
+                </h4>
                 <div id="pr" class="progress mb-5"></div>
                 <div class="row">
                   <div class="col-md-3">
@@ -101,6 +114,55 @@
                       <img src="./assets/images/jail.png" />
                       <p class="mb-0 pt-3">Φυλακές</p>
                       <p class="box-number mb-0" id="jail"></p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h2 class="text-center">Πιο συχνό είδος υπηρεσίας</h2>
+                    <div class="whitebox">
+                      <div class="boxinner d-flex gap-2">
+                        <img src="./assets/images/customer.png" />
+                        <div id="service-text" class="fw-bold"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h2 class="text-center">Πιο συχνό είδος άδειας</h2>
+                    <div class="whitebox">
+                      <div class="boxinner d-flex gap-2">
+                        <img src="./assets/images/bye.png" />
+                        <div id="adeia-text" class="fw-bold"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="container py-5">
+                      <h2 class="text-center">Άδειες</h2>
+                      <table id="tadeies" class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Άδεια</th>
+                            <th scope="col">Ημερομηνία</th>
+                          </tr>
+                        </thead>
+                        <tbody class="tbody-adeies"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="container py-5">
+                      <h2 class="text-center">Υπηρεσίες</h2>
+                      <table id="tservices" class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Υπηρεσία</th>
+                            <th scope="col">Ημερομηνία</th>
+                            <th scope="col">Νούμερο</th>
+                          </tr>
+                        </thead>
+                        <tbody class="tbody-yp"></tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
