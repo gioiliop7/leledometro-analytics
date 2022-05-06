@@ -57,6 +57,17 @@ $(document).ready(function () {
     return maxEl;
   }
 
+  function countItemsInArray(array, item) {
+    let count = 0;
+
+    array.forEach((element) => {
+      if (element === item) {
+        count += 1;
+      }
+    });
+    return count;
+  }
+
   function dateToTimestamp(date) {
     date = date.split("/");
     let newDate = new Date(date[2], date[1] - 1, date[0]);
@@ -90,7 +101,7 @@ $(document).ready(function () {
     return returnValue;
   }
 
-  function toDatatables(input){
+  function toDatatables(input) {
     $(input).DataTable({
       pagingType: "numbers",
       pageLength: 5,
@@ -99,6 +110,27 @@ $(document).ready(function () {
         url: "https://cdn.datatables.net/plug-ins/1.11.2/i18n/el.json",
       },
     });
+  }
+
+  //https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
+  function uniqueByKey(array, key) {
+    return [...new Map(array.map((x) => [x[key], x])).values()];
+  }
+
+  function pieChart(idDiv,counter,name,array){
+    var chart = am4core.create(idDiv, am4charts.PieChart);
+
+    // Add data
+    chart.data = array;
+    
+    // Add and configure Series
+    var pieSeries = chart.series.push(new am4charts.PieSeries());
+    pieSeries.dataFields.value = counter;
+    pieSeries.dataFields.category = name;
   }
 
   $("#xmlupload").change(function () {
@@ -224,7 +256,17 @@ $(document).ready(function () {
         yp_names.push(yp_name);
       });
 
-      toDatatables('#tservices');
+      let serviceCount;
+      let sCount = [];
+      yp_names.forEach((element) => {
+        serviceCount = countItemsInArray(yp_names, element);
+        let jsonObj = { name: element, counter: serviceCount };
+        sCount.push(jsonObj);
+      });
+
+      let uniqueServices = uniqueByKey(sCount, "counter");
+
+      toDatatables("#tservices");
 
       let i = 1;
       arrayAdeies.forEach((element) => {
@@ -245,13 +287,23 @@ $(document).ready(function () {
         adeies_names.push(adeiaName);
       });
 
-      toDatatables('#tadeies');
+      let adeiesCount;
+      let aCount = [];
+      adeies_names.forEach((element) => {
+        adeiesCount = countItemsInArray(adeies_names, element);
+        let jsonObj = { name: element, counter: adeiesCount };
+        aCount.push(jsonObj);
+      });
+
+      let uniqueAdeies = uniqueByKey(aCount, "counter");
+
+      toDatatables("#tadeies");
 
       poreies.forEach((element) => {
         let poreiaName = element.childNodes[0].innerText;
         let poreiaYear = element.childNodes[1].innerText;
         let poreiaMonth = element.childNodes[2].innerText;
-        let adeiaDay = element.childNodes[3].innerText;
+        let poreiaDay = element.childNodes[3].innerText;
       });
 
       const mfYpiresia = maxElement(yp_names);
@@ -292,6 +344,10 @@ $(document).ready(function () {
 
         animate();
       });
+
+      pieChart('adeies_pie',"counter","name",uniqueAdeies);
+      pieChart('service-pie',"counter","name",uniqueServices);
+
     };
   });
 });

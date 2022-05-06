@@ -211,3 +211,10 @@ header img {
 .whitebox img{
   max-width: 40px;
 }
+
+#adeies_pie,#service-pie {
+  width: 100%;
+  height: 250px;
+}
+
+
