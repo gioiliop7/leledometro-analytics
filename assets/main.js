@@ -121,12 +121,12 @@ $(document).ready(function () {
     return [...new Map(array.map((x) => [x[key], x])).values()];
   }
 
-  function pieChart(idDiv,counter,name,array){
+  function pieChart(idDiv, counter, name, array) {
     var chart = am4core.create(idDiv, am4charts.PieChart);
 
     // Add data
     chart.data = array;
-    
+
     // Add and configure Series
     var pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = counter;
@@ -140,6 +140,30 @@ $(document).ready(function () {
       this.value = "";
       return;
     }
+
+    const airVathmoi = [
+      "Ψάρακας",
+      "Σμηνίτης ΕΠΟΠ",
+      "Υποσμηνίας ΕΠΟΠ",
+      "Κληρωτός Σμηνίας",
+      "Σμηνίας ΕΜΘ-ΕΠΟΠ",
+      "Σμηνίας ΣΤΥΑ",
+      "Επισμηνίας ΕΜΘ-ΕΠΟΠ",
+      "Επισμηνίας ΣΤΥΑ",
+      "Αρχισμηνίας ΜΕΕ-ΕΜΘ-ΕΠΟΠ",
+      "Αρχισμηνίας ΣΤΥΑ",
+      "Ανθυπασπιστής",
+      "Ανθυποσμηναγός",
+      "Υποσμηναγός",
+      "Σμηναγός",
+      "Επισμηναγός",
+      "Αντισμήναρχος",
+      "Σμήναρχος",
+      "Ταξίαρχος",
+      "Υποπτέραρχος",
+      "Αντιπτέραρχος",
+      "Πτέραρχος"
+    ];
 
     const haf_logo = directoryPath + "assets/images/air.png";
     const army_logo = directoryPath + "assets/images/seal.png";
@@ -189,6 +213,7 @@ $(document).ready(function () {
 
       let logo;
       let somaColor;
+      let vathmoi;
       // ARMY = 0; NAVY = 1; HAF = 2;
       switch (soma) {
         case "0":
@@ -205,6 +230,7 @@ $(document).ready(function () {
           soma = "Πολεμική Αεροπορία";
           logo = haf_logo;
           somaColor = "#008bd0";
+          vathmoi = airVathmoi;
           break;
         default:
           break;
@@ -226,6 +252,10 @@ $(document).ready(function () {
       const thiteia = findDifferenceOfDays(endDate, startDate);
       let p = percentage(daysInArmy, thiteia);
       p = p.toFixed(2);
+
+      let countVathmoi = vathmoi.length;
+      const changeVathmoAt = parseInt(thiteia/countVathmoi);
+      console.log(changeVathmoAt);
 
       const htmlPercentage = `<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100" style="width:${p}%"></div>`;
       $("#pr").append(htmlPercentage);
@@ -345,9 +375,8 @@ $(document).ready(function () {
         animate();
       });
 
-      pieChart('adeies_pie',"counter","name",uniqueAdeies);
-      pieChart('service-pie',"counter","name",uniqueServices);
-
+      pieChart("adeies_pie", "counter", "name", uniqueAdeies);
+      pieChart("service-pie", "counter", "name", uniqueServices);
     };
   });
 });
