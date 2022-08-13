@@ -66,7 +66,7 @@ main {
 
 body {
   /* background: linear-gradient(-45deg, var(--army-olive),var(--army-khaki),var(--army-yellow),var(--haf-blue), var(--hellenic-blue),var(--navy-blue)); */
-  background: linear-gradient(315deg, #36669d 0%, #d3d3d3 74%);
+  background: linear-gradient(to right, #7474bf, #348ac7);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -217,4 +217,6 @@ header img {
   height: 250px;
 }
 
-
+#vathmos{
+  font-size:14px;
+}
