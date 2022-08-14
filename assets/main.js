@@ -143,12 +143,68 @@ $(document).ready(function () {
   }
 
   $("#xmlupload").change(function () {
+    $("#closebtn").click(function () {
+      window.location.reload();
+    });
     var file = document.getElementById("xmlupload").files[0];
     if (file.type != "text/xml") {
       alert("Please select JSON files only!");
       this.value = "";
       return;
     }
+
+    const seaVathmoi = [
+      "Ψάρακας",
+      "Ναύτης",
+      "Ναύτης ΕΠΟΠ",
+      "Δίοπος",
+      "Δίοπος ΕΠΟΠ",
+      "Κελευστής",
+      "Κελευστής ΕΠΟΠ",
+      "Κελευστής ΕΜΘ",
+      "Κελευστής ΣΜΥΝ",
+      "Επικελευστής ΕΠΟΠ-ΕΜΘ",
+      "Επικελευστής ΣΜΥΝ",
+      "Αρχικελευστής ΕΠΟΠ-ΕΜΘ",
+      "Αρχικελευστής ΣΜΥΝ",
+      "Ανθυπασπιστής Π.Ν.",
+      "Σημαιοφόρος Επίκουρος Αξιωματικός",
+      "Σημαιοφόρος",
+      "Ανθυποπλοίαρχος",
+      "Υποπλοίαρχος",
+      "Πλωτάρχης",
+      "Αντιπλοίαρχος",
+      "Πλοίαρχος",
+      "Αρχιπλοίαρχος",
+      "Υποναύαρχος",
+      "Αντιναύαρχος",
+      "Ναύαρχος",
+    ];
+
+    const landVathmoi = [
+      "Ψάρακας",
+      "Υποδεκανέας",
+      "Δεκανέας ΟΒΑ",
+      "Δεκανέας ΕΠΟΠ-ΕΜΘ",
+      "Λοχίας ΕΠΟΠ-ΕΜΘ",
+      "Λοχίας ΣΜΥ",
+      "Επιλοχίας ΕΠΟΠ-ΕΜΘ",
+      "Επιλοχίας ΣΜΥ",
+      "Αρχιλοχίας ΕΠΟΠ-ΕΜΘ",
+      "Αρχιλοχίας ΣΜΥ",
+      "Ανθυπασπιστής Σ.Ξ.",
+      "ΔΕΑ (Δόκιμος)",
+      "Ανθυπολοχαγός",
+      "Υπολοχαγός",
+      "Λοχαγός",
+      "Ταγματάρχης",
+      "Αντισυνταγματάρχης",
+      "Συνταγματάρχης",
+      "Ταξίαρχος Σ.Ξ.",
+      "Υποστράτηγος",
+      "Αντιστράτηγος",
+      "Στρατηγός",
+    ];
 
     const airVathmoi = [
       "Ψάρακας",
@@ -161,14 +217,14 @@ $(document).ready(function () {
       "Επισμηνίας ΣΤΥΑ",
       "Αρχισμηνίας ΜΕΕ-ΕΜΘ-ΕΠΟΠ",
       "Αρχισμηνίας ΣΤΥΑ",
-      "Ανθυπασπιστής",
+      "Ανθυπασπιστής Π.Α.",
       "Ανθυποσμηναγός",
       "Υποσμηναγός",
       "Σμηναγός",
       "Επισμηναγός",
       "Αντισμήναρχος",
       "Σμήναρχος",
-      "Ταξίαρχος",
+      "Ταξίαρχος Π.Α.",
       "Υποπτέραρχος",
       "Αντιπτέραρχος",
       "Πτέραρχος",
@@ -498,7 +554,6 @@ $(document).ready(function () {
     reader.onloadend = function () {
       var xmlData = $(reader.result);
       xmlData = xmlData[1];
-      // console.log(xmlData);
       const ypiresies = xmlData.getElementsByTagName("ipiresia");
       const details = xmlData.getElementsByTagName("stoixeia");
       const adeies = xmlData.getElementsByTagName("adeia");
@@ -531,23 +586,29 @@ $(document).ready(function () {
       let logo;
       let somaColor;
       let vathmoi;
+      let textcolor;
       // ARMY = 0; NAVY = 1; HAF = 2;
       switch (soma) {
         case "0":
           soma = "Στρατός Ξηράς";
           logo = army_logo;
           somaColor = "#fde81a";
+          vathmoi = landVathmoi;
+          textcolor = "#585759";
           break;
         case "1":
           soma = "Πολεμικό Ναυτικό";
           logo = navy_logo;
           somaColor = "#1b4279";
+          textcolor = "#fff";
+          vathmoi = seaVathmoi;
           break;
         case "2":
           soma = "Πολεμική Αεροπορία";
           logo = haf_logo;
           somaColor = "#008bd0";
           vathmoi = airVathmoi;
+          textcolor = "#fff";
           break;
         default:
           break;
@@ -578,7 +639,6 @@ $(document).ready(function () {
       let p = percentage(daysInArmy, thiteia);
       p = p.toFixed(2);
 
-
       let countVathmoi = vathmoi.length;
       const changeVathmoAt = parseInt(thiteia / countVathmoi);
       const vathmosPosition = Math.abs(~~(daysInArmy / changeVathmoAt));
@@ -586,22 +646,31 @@ $(document).ready(function () {
       let vathmosText;
       if (vathmos) {
         vathmosText = vathmos;
-      }else{
+        document
+          .getElementById("vathmosimg")
+          .setAttribute(
+            "src",
+            directoryPath + "assets/images/vathmoi/" + vathmos + ".png"
+          );
+      } else {
         vathmosText = "ΠΡΟΣΕΧΩΣ ΠΟΛΙΤΗΣ";
       }
 
-      if (isAfter(todayForCheck, endForCheck)){
+      if (isAfter(todayForCheck, endForCheck)) {
         apolele = 0;
         p = 100;
-        vathmosText = 'ΠΟΛΙΤΗΣ'
+        vathmosText = "ΠΟΛΙΤΗΣ";
       }
 
       document.getElementById("vathmos").innerHTML = vathmosText;
-      
+
       const htmlPercentage = `<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100" style="width:${p}%"></div>`;
       $("#pr").append(htmlPercentage);
       document.getElementById("the-percentage").innerText = ` ${p}%`;
       document.querySelector(".progress-bar").style.backgroundColor = somaColor;
+      $(".box").css("background-color", somaColor);
+      $(".box").css("color", textcolor);
+      $(".box-number").css("color", textcolor);
 
       let yp_names = [];
       let adeies_names = [];
@@ -670,12 +739,26 @@ $(document).ready(function () {
 
       toDatatables("#tadeies");
 
+      if (poreies.length < 1) {
+        $('#event').hide();
+      }
+
       poreies.forEach((element) => {
         let poreiaName = element.childNodes[0].innerText;
         let poreiaYear = element.childNodes[1].innerText;
         let poreiaMonth = element.childNodes[2].innerText;
+        poreiaMonth = parseInt(poreiaMonth) + 1;
         let poreiaDay = element.childNodes[3].innerText;
+        const poreiaDate = `${poreiaDay}/${poreiaMonth}/${poreiaYear}`;
+        const poreiaHtml = `<div class="d-flex gap-3">
+        <p class="eventdate">${poreiaDate}</p>
+        <p class="eventname">${poreiaName}</p>
+        </div>`;
+        $("#event").append(poreiaHtml);
       });
+
+      $(".eventdate").css("color", textcolor);
+      $(".eventdate").css("background-color", somaColor);
 
       const mfYpiresia = maxElement(yp_names);
       const mfAdeia = maxElement(adeies_names);
@@ -694,7 +777,19 @@ $(document).ready(function () {
       document.getElementById("sex").setAttribute("num", notLetMeOut);
       document.getElementById("jail").setAttribute("num", prison);
       document.getElementById("adeia-text").innerText = mfAdeia;
-      document.getElementById("service-text").innerText = mfYpiresia;
+      if (countYp > 0) {
+        document.getElementById("service-text").innerText = mfYpiresia;
+      } else {
+        document.getElementById("service-text").innerText =
+          "Δεν έχουν οριστεί υπηρεσίες";
+      }
+
+      if (countAdeies > 0) {
+        document.getElementById("adeia-text").innerText = mfAdeia;
+      } else {
+        document.getElementById("adeia-text").innerText =
+          "Δεν έχουν οριστεί αδειες";
+      }
 
       const counters = document.querySelectorAll(".box-number");
       const speed = 800;
@@ -716,8 +811,14 @@ $(document).ready(function () {
         animate();
       });
 
-      pieChart("adeies_pie", "counter", "name", uniqueAdeies);
-      pieChart("service-pie", "counter", "name", uniqueServices);
+      if (countYp > 0) {
+        pieChart("service-pie", "counter", "name", uniqueServices);
+        $(".servicepie").css("display", "block");
+      }
+      if (countAdeies > 0) {
+        pieChart("adeies_pie", "counter", "name", uniqueAdeies);
+        $(".adeiespie").css("display", "block");
+      }
     };
   });
 });

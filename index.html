@@ -60,15 +60,22 @@
       </div>
       <div id="dashboard">
         <div class="container dash">
+          <button
+            id="closebtn"
+            style="background: url(./assets/images/close.svg)"
+          ></button>
           <div class="row w-100">
             <div class="col-md-2 col-dash col-border">
               <div class="container">
                 <h4 class="text-center" id="person-name"></h4>
                 <p class="fst-italic text-center" id="vathmos"></p>
+                <img src="" id="vathmosimg" />
                 <p class="text-center grey-color" id="esso-seira"></p>
                 <h6 class="text-center grey-color fw-bold" id="asm"></h6>
                 <hr />
-                <p class="text-center grey-color"><span id="start"></span>-<span id="end"></span></p>
+                <p class="text-center grey-color">
+                  <span id="start"></span>-<span id="end"></span>
+                </p>
               </div>
             </div>
             <div class="col-md-7 col-dash col-border col-middle">
@@ -120,8 +127,8 @@
                       <p class="box-number mb-0" id="jail"></p>
                     </div>
                   </div>
-                <hr>
-                  <div class="col-md-6">
+                  <hr />
+                  <div class="col-md-6 servicescol">
                     <h2 class="text-center">Πιο συχνό είδος υπηρεσίας</h2>
                     <div class="whitebox">
                       <div class="boxinner d-flex gap-2">
@@ -130,7 +137,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6 adeiescol">
                     <h2 class="text-center">Πιο συχνό είδος άδειας</h2>
                     <div class="whitebox">
                       <div class="boxinner d-flex gap-2">
@@ -170,10 +177,10 @@
                       </table>
                     </div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-12 adeiespie pie">
                     <div id="adeies_pie"></div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-12 servicepie pie">
                     <div id="service-pie"></div>
                   </div>
                 </div>
@@ -183,8 +190,13 @@
               <div class="container d-flex flex-column align-items-center">
                 <h5 class="text-center" id="soma"></h5>
                 <img src="" alt="soma" id="somaimg" />
-                <hr>
-                <p class="text-center grey-color" id="quote"></p>
+                <p class="text-center grey-color py-4" id="quote"></p>
+                <div id="event">
+                  <h4 class="grey-color">
+                    Γεγονότα
+                    <hr />
+                  </h4>
+                </div>
               </div>
             </div>
           </div>
