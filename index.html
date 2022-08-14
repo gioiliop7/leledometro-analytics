@@ -43,15 +43,19 @@
           <div class="row">
             <div class="col-md-6 left maincol">test</div>
             <div class="col-md-6 right maincol">
-              <div id="upload">
-                <h2>Give me your xml :)</h2>
+              <div id="upload" class="text-center">
+                <h2>Ανέβασμα του xml αρχείου</h2>
+                <p>Ακολουθήστε τα βήματα και ανεβάστε το αρχείο xml που εξάγεται απο την εφαρμογή</p>
                 <form enctype="multipart/form-data" method="post">
-                  <input
-                    type="file"
-                    accept=".xml"
-                    name="xmlupload"
-                    id="xmlupload"
-                  />
+                  <label for="xmlupload">
+                    <span>Ανεβάστε αρχείο</span>
+                    <input
+                      type="file"
+                      accept=".xml"
+                      name="xmlupload"
+                      id="xmlupload"
+                    />
+                  </label>
                 </form>
               </div>
             </div>
@@ -187,7 +191,7 @@
               </div>
             </div>
             <div class="col-md-3 col-dash">
-              <div class="container d-flex flex-column align-items-center">
+              <div class="container d-flex flex-column align-items-center mt-5">
                 <h5 class="text-center" id="soma"></h5>
                 <img src="" alt="soma" id="somaimg" />
                 <p class="text-center grey-color py-4" id="quote"></p>
