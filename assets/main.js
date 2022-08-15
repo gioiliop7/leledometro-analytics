@@ -130,6 +130,10 @@ $(document).ready(function () {
     return [...new Map(array.map((x) => [x[key], x])).values()];
   }
 
+  function randomColor(){
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
+  }
+
   function pieChart(idDiv, counter, name, array) {
     var chart = am4core.create(idDiv, am4charts.PieChart);
 
@@ -140,6 +144,7 @@ $(document).ready(function () {
     var pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = counter;
     pieSeries.dataFields.category = name;
+    pieSeries.slices.template.propertyFields.fill = "color";
   }
   const getMonths = (fromDate, toDate) => {
     const fromYear = fromDate.getFullYear();
@@ -706,6 +711,7 @@ $(document).ready(function () {
 
         let yp_names = [];
         let adeies_names = [];
+        const ypDays = [];
 
         let j = 1;
         arrayServices.forEach((element) => {
@@ -716,6 +722,7 @@ $(document).ready(function () {
           let number = element.childNodes[4].innerText;
           yp_month = fixMonth(yp_month);
           let ypString = `${yp_day}/${yp_month}/${yp_year}`;
+          ypDays.push(ypString);
           console.log(yp_month);
           let html_yp = `
       <tr>
@@ -729,11 +736,18 @@ $(document).ready(function () {
           yp_names.push(yp_name);
         });
 
+        const uniqueDaysOfService = ypDays.filter(onlyUnique);
+        const daysOfService = uniqueDaysOfService.length;
+        const percentageOfKS = percentage(apolele, thiteia);
+        const daysInArmyWithoutOut = daysInArmy - countAdeies;
+        const percentageOfDaysIn = percentage(daysInArmyWithoutOut, thiteia);
+        const percentageOfAdeies = percentage(countAdeies, thiteia);
+
         let serviceCount;
         let sCount = [];
         yp_names.forEach((element) => {
           serviceCount = countItemsInArray(yp_names, element);
-          let jsonObj = { name: element, counter: serviceCount };
+          let jsonObj = { name: element, counter: serviceCount,color: randomColor() };
           sCount.push(jsonObj);
         });
 
@@ -764,9 +778,15 @@ $(document).ready(function () {
         let aCount = [];
         adeies_names.forEach((element) => {
           adeiesCount = countItemsInArray(adeies_names, element);
-          let jsonObj = { name: element, counter: adeiesCount };
+          let jsonObj = { name: element, counter: adeiesCount,color: randomColor() };
           aCount.push(jsonObj);
         });
+
+        const thiteiaData = [
+          { name: "Αδειες", counter: arrayAdeies.length, color: randomColor() },
+          { name: "Υπηρετήθηκαν", counter: daysInArmyWithoutOut,color: randomColor()},
+          { name: "Απομμένουν", counter: apolele,color: randomColor() },
+        ];
 
         let uniqueAdeies = uniqueByKey(aCount, "counter");
 
@@ -849,7 +869,10 @@ $(document).ready(function () {
         }
         if (countAdeies > 0) {
           pieChart("adeies_pie", "counter", "name", uniqueAdeies);
+          pieChart("thiteia-pie", "counter", "name", thiteiaData);
           $(".adeiespie").css("display", "block");
+          $(".thiteiapie").css("display", "block");
+
         }
       };
     }, 180);
