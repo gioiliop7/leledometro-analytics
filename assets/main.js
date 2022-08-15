@@ -559,7 +559,7 @@ $(document).ready(function () {
     });
     $("#statsbtn").click(function () {
       $("#info").hide();
-      $("#stats").show();
+      $("#stats").css('display', 'flex');
     });
     $("#infobtn").click();
     $("#closebtn").click(function () {
