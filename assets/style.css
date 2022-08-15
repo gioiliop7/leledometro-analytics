@@ -309,3 +309,7 @@ tspan {
 footer h5{
   font-weight: bold;
 }
+
+#info,#stats{
+  display:none;
+}

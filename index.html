@@ -45,7 +45,10 @@
             <div class="col-md-6 right maincol">
               <div id="upload" class="text-center">
                 <h2>Ανέβασμα του xml αρχείου</h2>
-                <p>Ακολουθήστε τα βήματα και ανεβάστε το αρχείο xml που εξάγεται απο την εφαρμογή</p>
+                <p>
+                  Ακολουθήστε τα βήματα και ανεβάστε το αρχείο xml που εξάγεται
+                  απο την εφαρμογή
+                </p>
                 <form enctype="multipart/form-data" method="post">
                   <label for="xmlupload">
                     <span>Ανεβάστε αρχείο</span>
@@ -80,107 +83,114 @@
                 <p class="text-center grey-color">
                   <span id="start"></span>-<span id="end"></span>
                 </p>
+                <button id="infobtn">info</button>
+                <button id="statsbtn">stats</button>
               </div>
             </div>
             <div class="col-md-7 col-dash col-border col-middle">
               <div class="container">
-                <h4>
-                  Ποσοστό ολοκληρωμένης θητείας:<span
-                    id="the-percentage"
-                  ></span>
-                </h4>
-                <div id="pr" class="progress mb-5"></div>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="box">
-                      <p>Υπηρετήθηκαν</p>
-                      <p class="box-number" id="done"></p>
+                <div id="info">
+                  <h4>
+                    Ποσοστό ολοκληρωμένης θητείας:<span
+                      id="the-percentage"
+                    ></span>
+                  </h4>
+                  <div id="pr" class="progress mb-5"></div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="box">
+                        <p>Υπηρετήθηκαν</p>
+                        <p class="box-number" id="done"></p>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="box">
+                        <p>Απομένουν(ΚΣ)</p>
+                        <p class="box-number" id="todo"></p>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="box">
+                        <p>Υπηρεσίες</p>
+                        <p class="box-number" id="services"></p>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="box">
+                        <p>Άδειες</p>
+                        <p class="box-number" id="adeies"></p>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-3">
-                    <div class="box">
-                      <p>Απομένουν(ΚΣ)</p>
-                      <p class="box-number" id="todo"></p>
+                  <div class="row py-5 align-items-center">
+                    <div class="col-md-6">
+                      <div class="innercol">
+                        <img src="./assets/images/close.png" />
+                        <p class="mb-0 pt-3">Στερήσεις εξόδου</p>
+                        <p class="box-number mb-0" id="sex"></p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="box">
-                      <p>Υπηρεσίες</p>
-                      <p class="box-number" id="services"></p>
+                    <div class="col-md-6">
+                      <div class="innercol">
+                        <img src="./assets/images/jail.png" />
+                        <p class="mb-0 pt-3">Φυλακές</p>
+                        <p class="box-number mb-0" id="jail"></p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="box">
-                      <p>Άδειες</p>
-                      <p class="box-number" id="adeies"></p>
+                    <hr />
+                    <div class="col-md-6 servicescol">
+                      <h2 class="text-center">Πιο συχνό είδος υπηρεσίας</h2>
+                      <div class="whitebox">
+                        <div class="boxinner d-flex gap-2">
+                          <img src="./assets/images/customer.png" />
+                          <div id="service-text" class="fw-bold"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 adeiescol">
+                      <h2 class="text-center">Πιο συχνό είδος άδειας</h2>
+                      <div class="whitebox">
+                        <div class="boxinner d-flex gap-2">
+                          <img src="./assets/images/bye.png" />
+                          <div id="adeia-text" class="fw-bold"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="container py-5">
+                        <h2 class="text-center">Άδειες</h2>
+                        <table id="tadeies" class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Άδεια</th>
+                              <th scope="col">Ημερομηνία</th>
+                            </tr>
+                          </thead>
+                          <tbody class="tbody-adeies"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="container py-5">
+                        <h2 class="text-center">Υπηρεσίες</h2>
+                        <table id="tservices" class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Υπηρεσία</th>
+                              <th scope="col">Ημερομηνία</th>
+                              <th scope="col">Νούμερο</th>
+                            </tr>
+                          </thead>
+                          <tbody class="tbody-yp"></tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="row py-5 align-items-center">
-                  <div class="col-md-6">
-                    <div class="innercol">
-                      <img src="./assets/images/close.png" />
-                      <p class="mb-0 pt-3">Στερήσεις εξόδου</p>
-                      <p class="box-number mb-0" id="sex"></p>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="innercol">
-                      <img src="./assets/images/jail.png" />
-                      <p class="mb-0 pt-3">Φυλακές</p>
-                      <p class="box-number mb-0" id="jail"></p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="col-md-6 servicescol">
-                    <h2 class="text-center">Πιο συχνό είδος υπηρεσίας</h2>
-                    <div class="whitebox">
-                      <div class="boxinner d-flex gap-2">
-                        <img src="./assets/images/customer.png" />
-                        <div id="service-text" class="fw-bold"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 adeiescol">
-                    <h2 class="text-center">Πιο συχνό είδος άδειας</h2>
-                    <div class="whitebox">
-                      <div class="boxinner d-flex gap-2">
-                        <img src="./assets/images/bye.png" />
-                        <div id="adeia-text" class="fw-bold"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="container py-5">
-                      <h2 class="text-center">Άδειες</h2>
-                      <table id="tadeies" class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Άδεια</th>
-                            <th scope="col">Ημερομηνία</th>
-                          </tr>
-                        </thead>
-                        <tbody class="tbody-adeies"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="container py-5">
-                      <h2 class="text-center">Υπηρεσίες</h2>
-                      <table id="tservices" class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Υπηρεσία</th>
-                            <th scope="col">Ημερομηνία</th>
-                            <th scope="col">Νούμερο</th>
-                          </tr>
-                        </thead>
-                        <tbody class="tbody-yp"></tbody>
-                      </table>
-                    </div>
-                  </div>
+                <div id="stats">
+                  <h3 class="my-3">Στατιστικά</h3>
                   <div class="col-md-12 adeiespie pie">
                     <div id="adeies_pie"></div>
                   </div>
