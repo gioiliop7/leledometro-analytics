@@ -708,6 +708,8 @@ $(document).ready(function () {
         $(".box").css("background-color", somaColor);
         $(".box").css("color", textcolor);
         $(".box-number").css("color", textcolor);
+        $(".dashbtn i").css("color", textcolor);
+        $(".dashbtn").css("background-color", somaColor);
 
         let yp_names = [];
         let adeies_names = [];
@@ -723,7 +725,6 @@ $(document).ready(function () {
           yp_month = fixMonth(yp_month);
           let ypString = `${yp_day}/${yp_month}/${yp_year}`;
           ypDays.push(ypString);
-          console.log(yp_month);
           let html_yp = `
       <tr>
         <th scope="row">${j}</th>
