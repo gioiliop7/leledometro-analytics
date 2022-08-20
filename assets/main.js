@@ -130,8 +130,8 @@ $(document).ready(function () {
     return [...new Map(array.map((x) => [x[key], x])).values()];
   }
 
-  function randomColor(){
-    return '#'+Math.floor(Math.random()*16777215).toString(16);
+  function randomColor() {
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
   }
 
   function pieChart(idDiv, counter, name, array) {
@@ -559,7 +559,7 @@ $(document).ready(function () {
     });
     $("#statsbtn").click(function () {
       $("#info").hide();
-      $("#stats").css('display', 'flex');
+      $("#stats").css("display", "flex");
     });
     $("#infobtn").click();
     $("#closebtn").click(function () {
@@ -667,6 +667,7 @@ $(document).ready(function () {
         const startForCheck = new Date(dateFormat(startDate));
         const endForCheck = new Date(dateFormat(endDate));
         const monthsInArmy = getMonths(startForCheck, endForCheck);
+        console.log(monthsInArmy);
         const monthsInArmyArray = [];
 
         const daysInArmy = findDifferenceOfDays(todayDateString, startDate); // How many days in army
@@ -725,6 +726,7 @@ $(document).ready(function () {
           yp_month = fixMonth(yp_month);
           let ypString = `${yp_day}/${yp_month}/${yp_year}`;
           ypDays.push(ypString);
+
           let html_yp = `
       <tr>
         <th scope="row">${j}</th>
@@ -735,6 +737,21 @@ $(document).ready(function () {
           $(".tbody-yp").append(html_yp);
           j++;
           yp_names.push(yp_name);
+        });
+
+        monthsInArmy.forEach((element) => {
+          let counterByMonth = 0;
+          const year = element.year;
+          const month = element.month;
+          arrayServices.forEach((element) => {
+            let yp_year = element.childNodes[1].innerText;
+            let yp_month = element.childNodes[2].innerText;
+            yp_month = fixMonth(yp_month);
+            if (year == yp_year && month == yp_month) {
+              counterByMonth++;
+            }
+          });
+          element.counter = counterByMonth;
         });
 
         const uniqueDaysOfService = ypDays.filter(onlyUnique);
@@ -748,7 +765,11 @@ $(document).ready(function () {
         let sCount = [];
         yp_names.forEach((element) => {
           serviceCount = countItemsInArray(yp_names, element);
-          let jsonObj = { name: element, counter: serviceCount,color: randomColor() };
+          let jsonObj = {
+            name: element,
+            counter: serviceCount,
+            color: randomColor(),
+          };
           sCount.push(jsonObj);
         });
 
@@ -779,14 +800,22 @@ $(document).ready(function () {
         let aCount = [];
         adeies_names.forEach((element) => {
           adeiesCount = countItemsInArray(adeies_names, element);
-          let jsonObj = { name: element, counter: adeiesCount,color: randomColor() };
+          let jsonObj = {
+            name: element,
+            counter: adeiesCount,
+            color: randomColor(),
+          };
           aCount.push(jsonObj);
         });
 
         const thiteiaData = [
           { name: "Αδειες", counter: arrayAdeies.length, color: randomColor() },
-          { name: "Υπηρετήθηκαν", counter: daysInArmyWithoutOut,color: randomColor()},
-          { name: "Απομμένουν", counter: apolele,color: randomColor() },
+          {
+            name: "Υπηρετήθηκαν",
+            counter: daysInArmyWithoutOut,
+            color: randomColor(),
+          },
+          { name: "Απομμένουν", counter: apolele, color: randomColor() },
         ];
 
         let uniqueAdeies = uniqueByKey(aCount, "counter");
@@ -873,7 +902,6 @@ $(document).ready(function () {
           pieChart("thiteia-pie", "counter", "name", thiteiaData);
           $(".adeiespie").css("display", "block");
           $(".thiteiapie").css("display", "block");
-
         }
       };
     }, 180);
