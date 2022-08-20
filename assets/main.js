@@ -754,12 +754,7 @@ $(document).ready(function () {
           element.counter = counterByMonth;
         });
 
-        const uniqueDaysOfService = ypDays.filter(onlyUnique);
-        const daysOfService = uniqueDaysOfService.length;
-        const percentageOfKS = percentage(apolele, thiteia);
         const daysInArmyWithoutOut = daysInArmy - countAdeies;
-        const percentageOfDaysIn = percentage(daysInArmyWithoutOut, thiteia);
-        const percentageOfAdeies = percentage(countAdeies, thiteia);
 
         let serviceCount;
         let sCount = [];
