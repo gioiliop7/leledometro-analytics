@@ -328,3 +328,51 @@ footer h5{
 #bar{
   display:none;
 }
+
+.step img{
+  max-width: 250px;
+  margin:0 auto;
+}
+
+.step{
+  display:flex!important;
+  flex-direction: column;
+  text-align: center;
+  gap:2rem;
+  margin:2rem 0;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.slick-prev:before,
+.slick-next:before{
+  color:#000;
+}
+
+.slick-next{
+  right:0;
+}
+
+.slick-prev{
+  left:0;
+}
+
+.slick-dots li button:before{
+  font-size: 20px;
+}
+
+@media screen and (max-width:1024px){
+  #info .row{
+    flex-direction: column;
+    gap:2rem;
+  }
+  .col-md-3,.col-md-2,.col-md-7,.event{
+    width:100%;
+  }
+  table{
+    overflow-x: auto;
+  }
+  .col-dash{
+    border:none;
+  }
+}

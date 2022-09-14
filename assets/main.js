@@ -567,8 +567,23 @@ $(document).ready(function () {
     });
     var file = document.getElementById("xmlupload").files[0];
     if (file.type != "text/xml") {
-      alert("Please select JSON files only!");
       this.value = "";
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: "Please use only valid xml",
+      });
       return;
     }
 
@@ -667,7 +682,6 @@ $(document).ready(function () {
         const startForCheck = new Date(dateFormat(startDate));
         const endForCheck = new Date(dateFormat(endDate));
         const monthsInArmy = getMonths(startForCheck, endForCheck);
-        console.log(monthsInArmy);
         const monthsInArmyArray = [];
 
         const daysInArmy = findDifferenceOfDays(todayDateString, startDate); // How many days in army
@@ -755,92 +769,101 @@ $(document).ready(function () {
           element.date = `${month}/${year}`;
         });
 
-        am5.ready(function() {
-
+        am5.ready(function () {
           // Create root element
           // https://www.amcharts.com/docs/v5/getting-started/#Root_element
           var root = am5.Root.new("barchartdiv");
-          
-          
+
           // Set themes
           // https://www.amcharts.com/docs/v5/concepts/themes/
-          root.setThemes([
-            am5themes_Animated.new(root)
-          ]);
-          
-          
+          root.setThemes([am5themes_Animated.new(root)]);
+
           // Create chart
           // https://www.amcharts.com/docs/v5/charts/xy-chart/
-          var chart = root.container.children.push(am5xy.XYChart.new(root, {
-            panX: false,
-            panY: false,
-            wheelX: false,
-            wheelY: false,
-            pinchZoomX:true
-          }));
-          
+          var chart = root.container.children.push(
+            am5xy.XYChart.new(root, {
+              panX: false,
+              panY: false,
+              wheelX: false,
+              wheelY: false,
+              pinchZoomX: true,
+            })
+          );
+
           // Add cursor
           // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
           var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
           cursor.lineY.set("visible", false);
-          
-          
+
           // Create axes
           // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-          var xRenderer = am5xy.AxisRendererX.new(root, { minGridDistance: 30 });
+          var xRenderer = am5xy.AxisRendererX.new(root, {
+            minGridDistance: 30,
+          });
           xRenderer.labels.template.setAll({
             rotation: -90,
             centerY: am5.p50,
             centerX: am5.p100,
-            paddingRight: 15
+            paddingRight: 15,
           });
-          
-          var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
-            maxDeviation: 0.3,
-            categoryField: "date",
-            renderer: xRenderer,
-            tooltip: am5.Tooltip.new(root, {})
-          }));
-          
-          var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            maxDeviation: 0.3,
-            renderer: am5xy.AxisRendererY.new(root, {})
-          }));
-          
-          
+
+          var xAxis = chart.xAxes.push(
+            am5xy.CategoryAxis.new(root, {
+              maxDeviation: 0.3,
+              categoryField: "date",
+              renderer: xRenderer,
+              tooltip: am5.Tooltip.new(root, {}),
+            })
+          );
+
+          var yAxis = chart.yAxes.push(
+            am5xy.ValueAxis.new(root, {
+              maxDeviation: 0.3,
+              renderer: am5xy.AxisRendererY.new(root, {}),
+            })
+          );
+
           // Create series
           // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-          var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-            name: "Series 1",
-            xAxis: xAxis,
-            yAxis: yAxis,
-            valueYField: "counter",
-            sequencedInterpolation: true,
-            categoryXField: "date",
-            tooltip: am5.Tooltip.new(root, {
-              labelText:"{valueY}"
+          var series = chart.series.push(
+            am5xy.ColumnSeries.new(root, {
+              name: "Series 1",
+              xAxis: xAxis,
+              yAxis: yAxis,
+              valueYField: "counter",
+              sequencedInterpolation: true,
+              categoryXField: "date",
+              tooltip: am5.Tooltip.new(root, {
+                labelText: "{valueY}",
+              }),
             })
-          }));
-          
-          series.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5 });
-          series.columns.template.adapters.add("fill", function(fill, target) {
+          );
+
+          series.columns.template.setAll({
+            cornerRadiusTL: 5,
+            cornerRadiusTR: 5,
+          });
+          series.columns.template.adapters.add("fill", function (fill, target) {
             return chart.get("colors").getIndex(series.columns.indexOf(target));
           });
-          
-          series.columns.template.adapters.add("stroke", function(stroke, target) {
-            return chart.get("colors").getIndex(series.columns.indexOf(target));
-          });
-          
+
+          series.columns.template.adapters.add(
+            "stroke",
+            function (stroke, target) {
+              return chart
+                .get("colors")
+                .getIndex(series.columns.indexOf(target));
+            }
+          );
+
           xAxis.data.setAll(monthsInArmy);
           series.data.setAll(monthsInArmy);
-          
-          
+
           // Make stuff animate on load
           // https://www.amcharts.com/docs/v5/concepts/animations/
           series.appear(1000);
           chart.appear(1000, 100);
-          
-          }); // end am5.ready()
+        }); // end am5.ready()
 
         const daysInArmyWithoutOut = daysInArmy - countAdeies;
 
@@ -980,18 +1003,31 @@ $(document).ready(function () {
           pieChart("service-pie", "counter", "name", uniqueServices);
           $(".servicepie").css("display", "block");
           $("#bar").css("display", "block");
-        }else{
-          $('#stats').append('<p class="text-center">Δεν έχουν οριστεί υπηρεσίες</p>');
+        } else {
+          $("#stats").append(
+            '<p class="text-center">Δεν έχουν οριστεί υπηρεσίες</p>'
+          );
         }
         if (countAdeies > 0) {
           pieChart("adeies_pie", "counter", "name", uniqueAdeies);
           pieChart("thiteia-pie", "counter", "name", thiteiaData);
           $(".adeiespie").css("display", "block");
           $(".thiteiapie").css("display", "block");
-        }else{
-          $('#stats').append('<p class="text-center">Δεν έχουν οριστεί αδειες</p>');
+        } else {
+          $("#stats").append(
+            '<p class="text-center">Δεν έχουν οριστεί αδειες</p>'
+          );
         }
       };
     }, 180);
+  });
+  $(".steps").slick({
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false,
   });
 });
