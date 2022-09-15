@@ -682,9 +682,14 @@ $(document).ready(function () {
         const startForCheck = new Date(dateFormat(startDate));
         const endForCheck = new Date(dateFormat(endDate));
         const monthsInArmy = getMonths(startForCheck, endForCheck);
-        const monthsInArmyArray = [];
 
-        const daysInArmy = findDifferenceOfDays(todayDateString, startDate); // How many days in army
+        let daysInArmy = findDifferenceOfDays(todayDateString, startDate); // How many days in army
+        const totalDays = findDifferenceOfDays(endDate,startDate);
+
+        if (totalDays < daysInArmy){
+          //Stop counter when citizen
+          daysInArmy = totalDays;
+        }
 
         const thiteia = findDifferenceOfDays(endDate, startDate);
         let p = percentage(daysInArmy, thiteia);
