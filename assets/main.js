@@ -921,7 +921,7 @@ $(document).ready(function () {
             counter: daysInArmyWithoutOut,
             color: randomColor(),
           },
-          { name: "Απομμένουν", counter: apolele, color: randomColor() },
+          { name: "Απομένουν", counter: apolele, color: randomColor() },
         ];
 
         let uniqueAdeies = uniqueByKey(aCount, "counter");

@@ -275,6 +275,15 @@ header img {
 
 .pie {
   display: none;
+  background:#fff;
+  padding:2rem;
+  box-shadow: 0px 5px 16px #10121729;
+}
+
+.pie h2{
+  border-bottom:1px solid #000;
+  text-align: center;
+  padding:1rem 0;
 }
 
 #event {
